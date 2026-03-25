@@ -41,6 +41,13 @@
       ]
     }
     </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+    (function(){
+        emailjs.init("ZrrJi5aVR5cmfzk2P");
+    })();
+    </script>
+    <script src="script.js"></script>
 </head>
 <body>
 
@@ -48,7 +55,7 @@
         <div class="container nav-flex">
             <div class="logo">
                 <a href="index.html">
-                    <img src="logo.png" alt="Sincere Affordable Motors Inc. Logo">
+                    <img src="logo.png" alt="Sincere Affordable Motors Inc - Auto Repair San Mateo CA">
                 </a>
             </div>
             
@@ -73,11 +80,20 @@
                 <div class="hero-text-box">
                     <h1>YOUR TRUSTED, LOCAL MECHANIC IN SAN MATEO</h1>
                     <p>Sincere, Affordable Repairs for the Community.</p>
-                    <a href="tel:6509314839" class="main-btn">Get a Free Estimate</a>
+                    <a href="javascript:void(0)" id="openEstimateModal" class="main-btn">Get a Free Estimate</a>
                 </div>
             </div>
         </div>
     </header>
+
+    <section class="trust-bar">
+        <div class="container trust-flex">
+            <div class="trust-item"><span>✓</span> ASE Certified</div>
+            <div class="trust-item"><span>✓</span> Local Family Owned</div>
+            <div class="trust-item"><span>✓</span> 12mo/12k Warranty</div>
+            <div class="trust-item"><span>✓</span> Fair & Transparent</div>
+        </div>
+    </section>
 
     <section id="services">
         <div class="container">
@@ -142,6 +158,41 @@
             <p style="margin-top: 40px; font-size: 0.8rem; opacity: 0.6;">&copy; 2026 Sincere Affordable Motors Inc. All Rights Reserved.</p>
         </div>
     </footer>
-<script src="script.js"></script>
+    <div id="estimateModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Request a Free Estimate</h2>
+            <p>Fill out the details below and we'll get back to you shortly.</p>
+            
+            <form id="estimateForm">
+                <div class="form-group">
+                    <label for="custName">Full Name *</label>
+                    <input type="text" id="custName" required placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="issueDesc">Description of Issues / Work Required *</label>
+                    <textarea id="issueDesc" rows="4" required placeholder="e.g. Brake squealing, 60k mile service..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="custEmail">Email Address *</label>
+                    <input type="email" id="custEmail" required placeholder="name@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="custPhone">Phone Number <span id="phoneReqLabel">(Optional)</span></label>
+                    <input type="tel" id="custPhone" placeholder="(650) 555-0123">
+                </div>
+
+                <div class="form-group radio-group">
+                    <input type="checkbox" id="callbackRequest">
+                    <label for="callbackRequest">Request a call back? (Requires Phone Number)</label>
+                </div>
+
+                <button type="submit" class="main-btn" style="width: 100%; border: none; cursor: pointer;">Send Request</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
