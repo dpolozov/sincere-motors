@@ -1,0 +1,211 @@
+/* 1. RESET & ROOT VARIABLES */
+:root {
+    --brand-blue: #1d2b3a;    /* Dark Slate Blue */
+    --brand-gold: #c38b30;    /* Professional Gold/Tan */
+    --light-bg: #f8f9fa;      /* Off-white for sections */
+    --white: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-main);
+    background-color: var(--white);
+}
+
+/* 2. NAVIGATION (White Header) */
+.main-nav {
+    background: var(--white);
+    padding: 15px 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 70px; /* Adjust based on your logo.png dimensions */
+    width: auto;
+    display: block;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.nav-links li {
+    margin-left: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--brand-blue);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--brand-gold);
+}
+
+.cta-btn-nav {
+    background: var(--brand-gold);
+    color: var(--white) !important;
+    padding: 12px 20px;
+    border-radius: 4px;
+    transition: opacity 0.3s;
+}
+
+.cta-btn-nav:hover {
+    opacity: 0.9;
+}
+
+/* 3. HERO SECTION (Blue Overlay) */
+.hero {
+    background: url('hero-bg.jpg') no-repeat center center/cover;
+    height: 80vh;
+    min-height: 500px;
+    position: relative;
+}
+
+.hero-overlay {
+    background: rgba(29, 43, 58, 0.75); /* Deep blue tint from mockup */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.hero-text-box {
+    color: var(--white);
+    max-width: 700px;
+}
+
+.hero-text-box h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.hero-text-box p {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.main-btn {
+    background: var(--brand-gold);
+    color: var(--white);
+    padding: 18px 35px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+/* 4. SERVICES SECTION */
+#services {
+    padding: 80px 0;
+    background: var(--light-bg);
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    color: var(--brand-blue);
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    width: 60px;
+    height: 4px;
+    background: var(--brand-gold);
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    color: var(--brand-blue);
+    margin-bottom: 15px;
+}
+
+/* 5. FOOTER / CONTACT */
+.footer {
+    background: var(--brand-blue);
+    color: var(--white);
+    padding: 60px 0;
+    text-align: center;
+}
+
+.footer h2 { margin-bottom: 20px; }
+.footer p { margin-bottom: 10px; color: #cbd5e0; }
+
+/* 6. MOBILE RESPONSIVENESS */
+@media (max-width: 992px) {
+    .hero-text-box h1 { font-size: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; } /* Hide for mobile - would require JS toggle */
+    .hero-text-box { text-align: center; }
+    .hero-text-box h1 { font-size: 2rem; }
+    .hero { height: 60vh; }
+}
+
+iframe {
+    filter: grayscale(0.2) contrast(1.1); /* Makes the map match the site's professional look */
+    border-radius: 8px;
+}
