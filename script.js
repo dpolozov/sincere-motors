@@ -1,37 +1,35 @@
-// Simple Mobile Toggle
-document.querySelector('.burger')?.addEventListener('click', () => {
-    document.querySelector('.nav-links').classList.toggle('active');
-});
-
-// Smooth Scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-const navSlide = () => {
+// Optimized Script for Sincere Affordable Motors
+const initSite = () => {
     const burger = document.querySelector('#burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
 
-    burger.addEventListener('click', () => {
-        // Toggle Nav
+    // 1. Mobile Toggle & Animation
+    burger?.addEventListener('click', () => {
         nav.classList.toggle('nav-active');
-
-        // Burger Animation (Optional: makes it turn into an 'X')
-        burger.classList.toggle('toggle');
+        burger.classList.toggle('toggle'); // Matches the CSS "X" animation
     });
 
-    // Close menu when a link is clicked
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            nav.classList.remove('nav-active');
+    // 2. Smooth Scrolling & Auto-Close Menu
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+                // Close the mobile menu after clicking a link
+                nav.classList.remove('nav-active');
+                burger.classList.remove('toggle');
+            }
         });
     });
 }
 
-navSlide();
+// Fire it up
+initSite();
