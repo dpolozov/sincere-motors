@@ -66,7 +66,7 @@ const initSite = () => {
             };
 
             // Send via EmailJS
-            emailjs.send('service_k34qctd', 'template_rnv20e6', templateParams)
+            emailjs.send('service_sutnpxr', 'template_rnv20e6', templateParams)
                 .then(function() {
                     alert("Thank you! Your estimate request has been sent successfully.");
                     modal.style.display = "none";
