@@ -32,6 +32,13 @@ const initSite = () => {
 
     window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
 
+    // --- CLOSE MODAL ON ESC KEY ---
+    window.addEventListener('keydown', (e) => {
+        if (e.key === "Escape" && modal.style.display === "block") {
+            modal.style.display = "none";
+        }
+    });
+
     // --- CONDITIONAL PHONE REQUIREMENT ---
     if (callbackCheck && phoneInput) {
         callbackCheck.addEventListener('change', () => {
