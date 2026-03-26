@@ -89,7 +89,7 @@ body {
 
 /* 3. HERO SECTION (Blue Overlay) */
 .hero {
-    background: url('hero-bg.jpg') no-repeat center center/cover;
+    background: url('hero-bg.webp') no-repeat center center/cover;
     height: 80vh;
     min-height: 500px;
     position: relative;
@@ -122,6 +122,7 @@ body {
     font-weight: 300;
 }
 
+/* Improved Button Transition */
 .main-btn {
     cursor: pointer;
     border: none;
@@ -134,13 +135,12 @@ body {
     border-radius: 4px;
     display: inline-block;
     font-size: 1rem;
+    transition: all 0.3s ease; /* Moved from hover to base class for smooth entry AND exit */
 }
 
-/* Add a hover effect to your main-btn to match the luxury feel */
 .main-btn:hover {
-    background: #b07a28; /* A slightly darker gold for interaction */
+    background: #b07a28; 
     transform: translateY(-2px);
-    transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(195, 139, 48, 0.4);
 }
 
@@ -176,6 +176,10 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
+
+/* Utility for dark backgrounds */
+.text-white { color: var(--white) !important; }
+.text-white::after { background: var(--brand-gold) !important; }
 
 .card {
     background: var(--white);
@@ -453,4 +457,10 @@ iframe {
     font-size: 1.2rem;
     font-family: 'Product Sans', Arial, sans-serif;
     font-weight: 900;
+}
+
+iframe {
+    filter: grayscale(0.2) contrast(1.1);
+    border: 2px solid var(--brand-gold); /* Adds a thin gold frame to the map */
+    border-radius: 8px;
 }
