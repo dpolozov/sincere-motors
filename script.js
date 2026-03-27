@@ -52,40 +52,50 @@ const initSite = () => {
         });
     }
 
-    // --- EMAILJS SUBMISSION ---
     if (estimateForm) {
-        estimateForm.addEventListener('submit', function(e) {
+        estimateForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Change button text to show progress
-            const submitBtn = this.querySelector('button');
+            const submitBtn = estimateForm.querySelector('button[type="submit"]');
+            const successAlert = document.querySelector('#successAlert');
+            const closeAlertBtn = document.querySelector('#closeAlertBtn');
+
+            // Show loading state on the button
             const originalBtnText = submitBtn.innerText;
             submitBtn.innerText = "Sending...";
             submitBtn.disabled = true;
 
-            // Prepare parameters (The keys must match the {{variables}} in your EmailJS template)
-            const templateParams = {
-                custName: document.querySelector('#custName').value,
-                custEmail: document.querySelector('#custEmail').value,
-                custPhone: phoneInput.value || "Not provided",
-                issueDesc: document.querySelector('#issueDesc').value,
-                callback: callbackCheck.checked ? "Yes" : "No"
-            };
+            const formData = new FormData(estimateForm);
+            const data = Object.fromEntries(formData.entries());
 
-            // Send via EmailJS
-            emailjs.send('service_sutnpxr', 'template_rnv20e6', templateParams)
-                .then(function() {
-                    alert("Thank you! Your estimate request has been sent successfully.");
+            try {
+                const response = await fetch('https://api.staticforms.xyz/submit', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    // 1. Close the estimate modal immediately
                     modal.style.display = "none";
                     estimateForm.reset();
-                }, function(error) {
-                    alert("Oops... something went wrong. Please try calling us instead.");
-                    console.log('FAILED...', error);
-                })
-                .finally(() => {
-                    submitBtn.innerText = originalBtnText;
-                    submitBtn.disabled = false;
-                });
+
+                    // 2. Show the slim success alert
+                    successAlert.style.display = "flex"; // Using flex to center content
+
+                    // 3. Close alert logic
+                    closeAlertBtn.onclick = () => {
+                        successAlert.style.display = "none";
+                    };
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                alert("Connection error. Please call us at (650) 931-4839.");
+            } finally {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            }
         });
     }
 
