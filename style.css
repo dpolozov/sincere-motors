@@ -223,6 +223,18 @@ body {
     .main-nav { padding: 10px 0; }
 }
 
+@media screen and (max-width: 480px) {
+    .modal-content {
+        margin: 2% auto;
+        padding: 15px;
+        width: 95%;
+    }
+    
+    h2 {
+        font-size: 1.2rem; /* Shrinks the header slightly */
+    }
+}
+
 iframe {
     filter: grayscale(0.2) contrast(1.1); /* Makes the map match the site's professional look */
     border-radius: 8px;
@@ -294,39 +306,58 @@ iframe {
 }
 .trust-item span { color: var(--brand-gold); margin-right: 5px; }
 
-/* Modal Background */
+/* The Background Overlay */
 .modal {
-    display: none; 
+    display: none; /* Hidden by default */
     position: fixed; 
-    z-index: 2000; 
+    z-index: 1000; 
     left: 0;
     top: 0;
     width: 100%; 
-    height: 100%; 
-    background-color: rgba(0,0,0,0.7);
-    backdrop-filter: blur(5px);
+    height: 100%;
+    background-color: rgba(0,0,0,0.6); /* Darker backdrop for better focus */
+    backdrop-filter: blur(3px); /* Optional: blurs the background site */
+    
+    /* Centering Magic */
+    display: none; /* JS toggles this to 'flex' or 'block' */
+    align-items: center; 
+    justify-content: center;
+    padding: 10px; /* Safety gap so modal doesn't touch screen edges */
 }
 
-/* Modal Box */
+/* The Modal Box itself */
 .modal-content {
-    background-color: var(--white);
-    margin: 5% auto;
-    padding: 40px;
-    border-radius: 8px;
-    width: 90%;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
     max-width: 500px;
     position: relative;
-    box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+    /* --- SCROLLING FIX --- */
+    max-height: 90vh; /* Limits height to 90% of screen */
+    overflow-y: auto; /* Adds scrollbar inside if content overflows */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling for iPhones */
 }
 
+/* Make the scrollbar look a bit cleaner */
+.modal-content::-webkit-scrollbar {
+    width: 10px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+/* Close Button Position */
 .close-modal {
     position: absolute;
     right: 20px;
-    top: 10px;
+    top: 15px;
     font-size: 28px;
-    font-weight: bold;
     cursor: pointer;
-    color: var(--brand-blue);
+    line-height: 1;
 }
 
 .form-group { margin-bottom: 20px; text-align: left; }
