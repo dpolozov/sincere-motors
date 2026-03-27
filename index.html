@@ -50,11 +50,6 @@
     }
     </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-    (function(){
-        emailjs.init("ZrrJi5aVR5cmfzk2P");
-    })();
-    </script>
     <script src="script.js"></script>
 </head>
 <body>
@@ -259,34 +254,39 @@
 
             <p>Fill out the details below and we'll get back to you shortly.</p>
 
-            <form id="estimateForm">
+            <form action="https://api.staticforms.xyz/submit" method="POST" id="estimateForm">
+                <input type="hidden" name="accessKey" value="sf_4a65a4e98436b0de6e984fa1">
+                <input type="hidden" name="replyTo" value="email">
+                <input type="hidden" name="_subject" value="New Estimate Request - TCF Auto Service Inc.">
+
                 <div class="form-group">
                     <label for="custName">Name *</label>
-                    <input type="text" id="custName" required placeholder="John Doe">
+                    <input type="text" name="name" id="custName" required placeholder="John Doe">
                 </div>
 
                 <div class="form-group">
-                    <label for="issueDesc">Description of Issues / Work Required *</label>
-                    <textarea id="issueDesc" rows="4" required placeholder="e.g. Brake squealing, 60k mile service..."></textarea>
+                    <label for="issueDesc">Description of Issues *</label>
+                    <textarea name="message" id="issueDesc" rows="4" required placeholder="Brake service, etc..."></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="custEmail">Email Address *</label>
-                    <input type="email" id="custEmail" required placeholder="name@email.com">
+                    <input type="email" name="email" id="custEmail" required placeholder="name@email.com">
                 </div>
 
                 <div class="form-group">
-                    <label for="custPhone">Phone Number <span id="phoneReqLabel">(Optional)</span></label>
-                    <input type="tel" id="custPhone" placeholder="(650) 555-0123">
-                </div>
-
-                <div class="form-group radio-group">
-                    <input type="checkbox" id="callbackRequest">
-                    <label for="callbackRequest">Request a call back? (Requires Phone Number)</label>
+                    <label for="custPhone">Phone Number</label>
+                    <input type="tel" name="phone" id="custPhone" placeholder="(650) 555-0123">
                 </div>
 
                 <button type="submit" class="main-btn" style="width: 100%; border: none; cursor: pointer;">Send Request</button>
             </form>
+        </div>
+    </div>
+    <div id="successAlert" class="modal" style="display:none; z-index: 2000;">
+        <div class="modal-content" style="max-width: 300px; text-align: center; padding: 25px; border-radius: 4px;">
+            <h3 style="color: var(--brand-blue); font-size: 1.1rem; margin-bottom: 15px; font-weight: 600;">Message Sent</h3>
+            <button class="main-btn" id="closeAlertBtn" style="width: 100%; padding: 10px; font-size: 0.9rem;">OK</button>
         </div>
     </div>
 </body>
