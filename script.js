@@ -7,9 +7,12 @@ const initSite = () => {
     const closeModalBtn = document.querySelector('.close-modal');
     const estimateForm = document.querySelector('#estimateForm');
     
-    const callbackCheck = document.querySelector('#callbackRequest');
+    // Selectors for dynamic contact fields
+    const phoneGroup = document.querySelector('#phone-group');
     const phoneInput = document.querySelector('#custPhone');
     const phoneLabel = document.querySelector('#phoneReqLabel');
+    const replyRadios = document.querySelectorAll('input[name="replyTo"]');
+    const contactPrefHidden = document.querySelector('#contactPrefHidden');
 
     // --- MOBILE NAV ---
     if (burger && nav) {
@@ -21,9 +24,7 @@ const initSite = () => {
 
     // --- MODAL OPEN/CLOSE ---
     if (openModalBtn && modal) {
-        openModalBtn.addEventListener('click', (e) => {
-            modal.style.display = "block";
-        });
+        openModalBtn.addEventListener('click', () => modal.style.display = "flex");
     }
 
     if (closeModalBtn) {
@@ -32,35 +33,47 @@ const initSite = () => {
 
     window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
 
-    // --- CLOSE MODAL ON ESC KEY ---
     window.addEventListener('keydown', (e) => {
-        if (e.key === "Escape" && modal.style.display === "block") {
-            modal.style.display = "none";
-        }
+        if (e.key === "Escape" && modal.style.display === "block") modal.style.display = "none";
     });
 
-    // --- CONDITIONAL PHONE REQUIREMENT ---
-    if (callbackCheck && phoneInput) {
-        callbackCheck.addEventListener('change', () => {
-            if (callbackCheck.checked) {
-                phoneInput.required = true;
-                if (phoneLabel) phoneLabel.innerText = "* (Required)";
-            } else {
-                phoneInput.required = false;
-                if (phoneLabel) phoneLabel.innerText = "(Optional)";
-            }
+    // --- CONDITIONAL PHONE & CONTACT PREFERENCE LOGIC ---
+    if (replyRadios.length > 0 && phoneGroup && phoneInput) {
+        replyRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                const isPhoneRequested = document.querySelector('input[name="replyTo"]:checked').value === 'phone';
+                
+                if (isPhoneRequested) {
+                    phoneGroup.style.display = "block";
+                    phoneInput.required = true;
+                    if (contactPrefHidden) contactPrefHidden.value = "!!! CALL BACK REQUESTED !!!";
+                    if (phoneLabel) {
+                        phoneLabel.innerText = "* (Required)";
+                        phoneLabel.style.color = "#d9534f";
+                    }
+                    phoneInput.focus();
+                } else {
+                    phoneGroup.style.display = "none";
+                    phoneInput.required = false;
+                    if (contactPrefHidden) contactPrefHidden.value = "Email Only";
+                    if (phoneLabel) {
+                        phoneLabel.innerText = "(Optional)";
+                        phoneLabel.style.color = "#666";
+                    }
+                    phoneInput.value = ""; 
+                }
+            });
         });
     }
 
+    // --- FORM SUBMISSION (StaticForms) ---
     if (estimateForm) {
         estimateForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const submitBtn = estimateForm.querySelector('button[type="submit"]');
             const successAlert = document.querySelector('#successAlert');
             const closeAlertBtn = document.querySelector('#closeAlertBtn');
 
-            // Show loading state on the button
             const originalBtnText = submitBtn.innerText;
             submitBtn.innerText = "Sending...";
             submitBtn.disabled = true;
@@ -76,19 +89,18 @@ const initSite = () => {
                 });
 
                 if (response.ok) {
-                    // 1. Close the estimate modal immediately
                     modal.style.display = "none";
                     estimateForm.reset();
+                    // Reset phone field visibility after reset
+                    phoneGroup.style.display = "none";
+                    phoneInput.required = false;
 
-                    // 2. Show the slim success alert
-                    successAlert.style.display = "flex"; // Using flex to center content
-
-                    // 3. Close alert logic
-                    closeAlertBtn.onclick = () => {
-                        successAlert.style.display = "none";
-                    };
+                    if (successAlert) {
+                        successAlert.style.display = "flex";
+                        closeAlertBtn.onclick = () => successAlert.style.display = "none";
+                    }
                 } else {
-                    throw new Error('Form submission failed');
+                    throw new Error('Submission failed');
                 }
             } catch (error) {
                 alert("Connection error. Please call us at (650) 931-4839.");

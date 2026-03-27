@@ -244,7 +244,7 @@
             
             <div class="modal-call-section">
                 <a href="tel:6509314839" class="cta-btn-nav modal-cta">
-                650-931-4839
+                    650-931-4839
                 </a>
             </div>
 
@@ -258,6 +258,7 @@
                 <input type="hidden" name="accessKey" value="sf_4a65a4e98436b0de6e984fa1">
                 <input type="hidden" name="replyTo" value="email">
                 <input type="hidden" name="_subject" value="New Estimate Request - TCF Auto Service Inc.">
+                <input type="hidden" name="Contact_Preference" id="contactPrefHidden" value="Email Only">
 
                 <div class="form-group">
                     <label for="custName">Name *</label>
@@ -265,8 +266,13 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="vehicleInfo">Vehicle Year, Make, & Model *</label>
+                    <input type="text" name="vehicle" id="vehicleInfo" required placeholder="e.g., 2018 Toyota Camry">
+                </div>
+
+                <div class="form-group">
                     <label for="issueDesc">Description of Issues *</label>
-                    <textarea name="message" id="issueDesc" rows="4" required placeholder="Brake service, etc..."></textarea>
+                    <textarea name="message" id="issueDesc" rows="4" required placeholder="Brake service, oil leak, etc..."></textarea>
                 </div>
 
                 <div class="form-group">
@@ -275,11 +281,25 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="custPhone">Phone Number</label>
+                    <label>How should we reach you? *</label>
+                    <div class="radio-options" style="display: flex; gap: 20px; margin: 10px 0;">
+                        <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                            <input type="radio" name="replyTo" value="email" checked> Email Only
+                        </label>
+                        <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                            <input type="radio" name="replyTo" value="phone"> Request Call Back
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="phone-group" style="display: none;">
+                    <label for="custPhone">Phone Number <span id="phoneReqLabel" style="font-size: 0.8em; font-weight: normal;">(Optional)</span></label>
                     <input type="tel" name="phone" id="custPhone" placeholder="(650) 555-0123">
                 </div>
 
-                <button type="submit" class="main-btn" style="width: 100%; border: none; cursor: pointer;">Send Request</button>
+                <button type="submit" class="main-btn" style="width: 100%; border: none; cursor: pointer; margin-top: 10px;">
+                    Send Request
+                </button>
             </form>
         </div>
     </div>
