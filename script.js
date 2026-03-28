@@ -1,13 +1,22 @@
-// 1. The Callback function
+/**
+ * TCF Auto - Website Interaction Script
+ * Handles: Navigation, Modals, Conditional Contact Fields, and reCAPTCHA/StaticForms Submission
+ */
+
+// 1. GLOBAL CALLBACK: Required for reCAPTCHA 'data-callback' to function correctly
 function onRecaptchaSuccess(token) {
-    console.log("Success!");
-    
-    // 2. Logic to close your modal
-    const myModal = document.getElementById('estimateModal');
-    myModal.style.display = 'none'; 
-    
-    // Optional: Submit the form automatically
-    // document.getElementById("my-form").submit();
+    const estimateForm = document.querySelector('#estimateForm');
+    const modal = document.querySelector('#estimateModal');
+
+    // Close the modal immediately so the user sees progress
+    if (modal) {
+        modal.style.display = "none";
+    }
+
+    // Trigger the actual 'submit' event logic defined in initSite
+    if (estimateForm) {
+        estimateForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
 }
 
 const initSite = () => {
@@ -17,17 +26,28 @@ const initSite = () => {
     const modal = document.querySelector('#estimateModal');
     const closeModalBtn = document.querySelector('.close-modal');
     const estimateForm = document.querySelector('#estimateForm');
-    const closeAlertBtn = document.querySelector('#closeAlertBtn');
     const successAlert = document.querySelector('#successAlert');
+    const closeAlertBtn = document.querySelector('#closeAlertBtn');
     
-    // Selectors for dynamic contact fields
+    // Dynamic contact field selectors
     const phoneGroup = document.querySelector('#phone-group');
     const phoneInput = document.querySelector('#custPhone');
     const phoneLabel = document.querySelector('#phoneReqLabel');
     const replyRadios = document.querySelectorAll('input[name="replyTo"]');
     const contactPrefHidden = document.querySelector('#contactPrefHidden');
 
-    // --- MOBILE NAV ---
+    // --- RECAPTCHA UI FIX ---
+    // Injects style to lift the "Verify" challenge bubble so it isn't obscured
+    const style = document.createElement('style');
+    style.innerHTML = `
+        iframe[title="recaptcha challenge"] { 
+            transform: translateY(-100px) !important; 
+            -webkit-transform: translateY(-100px) !important; 
+        }
+    `;
+    document.head.appendChild(style);
+
+    // --- MOBILE NAVIGATION ---
     if (burger && nav) {
         burger.addEventListener('click', () => {
             nav.classList.toggle('nav-active');
@@ -35,10 +55,8 @@ const initSite = () => {
         });
     }
 
-    // --- MODAL OPEN/CLOSE ---
-    // Select all buttons that should open the estimate modal
+    // --- MODAL CONTROLS ---
     const openModalButtons = document.querySelectorAll('#openEstimateModal, .open-modal-trigger');
-
     if (openModalButtons.length > 0 && modal) {
         openModalButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -52,13 +70,14 @@ const initSite = () => {
         closeModalBtn.onclick = () => modal.style.display = "none";
     }
 
-    // --- CONDITIONAL PHONE & CONTACT PREFERENCE LOGIC ---
+    // --- CONDITIONAL PHONE LOGIC ---
+    // Toggles phone requirement based on user preference
     if (replyRadios.length > 0 && phoneGroup && phoneInput) {
         replyRadios.forEach(radio => {
             radio.addEventListener('change', () => {
-                const isPhoneRequested = document.querySelector('input[name="replyTo"]:checked').value === 'phone';
+                const selected = document.querySelector('input[name="replyTo"]:checked').value;
                 
-                if (isPhoneRequested) {
+                if (selected === 'phone') {
                     phoneGroup.style.display = "block";
                     phoneInput.required = true;
                     if (contactPrefHidden) contactPrefHidden.value = "!!! CALL BACK REQUESTED !!!";
@@ -81,35 +100,21 @@ const initSite = () => {
         });
     }
 
-    // --- FORM SUBMISSION ---
+    // --- FORM SUBMISSION (STATICFORMS + FETCH) ---
     if (estimateForm) {
         estimateForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-        // 1. Get reCAPTCHA response
             const recaptchaResponse = grecaptcha.getResponse();
-            
-            if (recaptchaResponse.length === 0) {
-                alert("Please complete the reCAPTCHA check.");
-                return; // Stop submission if not checked
-            }
+            if (recaptchaResponse.length === 0) return; 
 
-            // 2. Collect checked services (from previous step)
-            const checkedServices = [];
-            const checkboxes = estimateForm.querySelectorAll('input[name="services[]"]:checked');
-            checkboxes.forEach(cb => checkedServices.push(cb.value));
-
-            // 3. Prepare the data object
+            // Prepare data object for StaticForms
             const formData = new FormData(estimateForm);
             const data = Object.fromEntries(formData.entries());
+            data['g-recaptcha-response'] = recaptchaResponse;
+            data.subject = "New Estimate Request - TCF Auto"; // Updated branding
 
-            // 4. Add the reCAPTCHA token and services to the data
-            data['g-recaptcha-response'] = recaptchaResponse; // StaticForms looks for this key
-            data.services_requested = checkedServices.join(', ');
-            data.subject = "New Estimate Request - TCF Auto";
-
-            // Look for the submit button by its attribute, even if it's in the modal-footer
-            const submitBtn = document.querySelector('button[type="submit"][form="estimateForm"]');
+            const submitBtn = document.querySelector('button[type="submit"]') || estimateForm.querySelector('button');
             const originalBtnText = submitBtn.innerText;
 
             try {
@@ -125,23 +130,19 @@ const initSite = () => {
                 const result = await response.json();
 
                 if (result.success) {
-                    // ... rest of your success logic (reset form, show successAlert)
                     estimateForm.reset();
-                    phoneGroup.style.display = "none";
-                    phoneInput.required = false;
-
-                    if (successAlert) {
-                        successAlert.style.display = "flex";
-                    }
+                    grecaptcha.reset(); 
+                    if (phoneGroup) phoneGroup.style.display = "none"; 
+                    
+                    if (successAlert) successAlert.style.display = "flex";
                     if (closeAlertBtn) {
-                    closeAlertBtn.onclick = () => {
-                        successAlert.style.display = "none";
-                    };
-                }
+                        closeAlertBtn.onclick = () => successAlert.style.display = "none";
+                    }
                 } else {
                     throw new Error('Submission failed');
                 }
             } catch (error) {
+                // Provides your specific business phone for fallback
                 alert("Connection error. Please call us at (650) 931-4839.");
             } finally {
                 submitBtn.innerText = originalBtnText;
@@ -159,8 +160,11 @@ const initSite = () => {
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
-                    nav.classList.remove('nav-active');
-                    burger.classList.remove('toggle');
+                    // Close mobile nav on click
+                    if (nav.classList.contains('nav-active')) {
+                        nav.classList.remove('nav-active');
+                        burger.classList.remove('toggle');
+                    }
                 }
             }
         });
