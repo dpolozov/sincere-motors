@@ -3,9 +3,10 @@ const initSite = () => {
     const burger = document.querySelector('#burger');
     const nav = document.querySelector('.nav-links');
     const modal = document.querySelector('#estimateModal');
-    const openModalBtn = document.querySelector('#openEstimateModal');
     const closeModalBtn = document.querySelector('.close-modal');
     const estimateForm = document.querySelector('#estimateForm');
+    const closeAlertBtn = document.querySelector('#closeAlertBtn');
+    const successAlert = document.querySelector('#successAlert');
     
     // Selectors for dynamic contact fields
     const phoneGroup = document.querySelector('#phone-group');
@@ -23,19 +24,21 @@ const initSite = () => {
     }
 
     // --- MODAL OPEN/CLOSE ---
-    if (openModalBtn && modal) {
-        openModalBtn.addEventListener('click', () => modal.style.display = "flex");
+    // Select all buttons that should open the estimate modal
+    const openModalButtons = document.querySelectorAll('#openEstimateModal, .open-modal-trigger');
+
+    if (openModalButtons.length > 0 && modal) {
+        openModalButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.style.display = "flex";
+            });
+        });
     }
 
     if (closeModalBtn) {
         closeModalBtn.onclick = () => modal.style.display = "none";
     }
-
-    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
-
-    window.addEventListener('keydown', (e) => {
-        if (e.key === "Escape" && modal.style.display === "block") modal.style.display = "none";
-    });
 
     // --- CONDITIONAL PHONE & CONTACT PREFERENCE LOGIC ---
     if (replyRadios.length > 0 && phoneGroup && phoneInput) {
@@ -66,39 +69,62 @@ const initSite = () => {
         });
     }
 
-    // --- FORM SUBMISSION (StaticForms) ---
+    // --- FORM SUBMISSION ---
     if (estimateForm) {
         estimateForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const submitBtn = estimateForm.querySelector('button[type="submit"]');
-            const successAlert = document.querySelector('#successAlert');
-            const closeAlertBtn = document.querySelector('#closeAlertBtn');
 
-            const originalBtnText = submitBtn.innerText;
-            submitBtn.innerText = "Sending...";
-            submitBtn.disabled = true;
+        // 1. Get reCAPTCHA response
+            const recaptchaResponse = grecaptcha.getResponse();
+            
+            if (recaptchaResponse.length === 0) {
+                alert("Please complete the reCAPTCHA check.");
+                return; // Stop submission if not checked
+            }
 
+            // 2. Collect checked services (from previous step)
+            const checkedServices = [];
+            const checkboxes = estimateForm.querySelectorAll('input[name="services[]"]:checked');
+            checkboxes.forEach(cb => checkedServices.push(cb.value));
+
+            // 3. Prepare the data object
             const formData = new FormData(estimateForm);
             const data = Object.fromEntries(formData.entries());
 
+            // 4. Add the reCAPTCHA token and services to the data
+            data['g-recaptcha-response'] = recaptchaResponse; // StaticForms looks for this key
+            data.services_requested = checkedServices.join(', ');
+            data.subject = "New Estimate Request - TCF Auto";
+
+            const submitBtn = estimateForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerText;
+
             try {
+                submitBtn.innerText = "Sending...";
+                submitBtn.disabled = true;
+
                 const response = await fetch('https://api.staticforms.xyz/submit', {
                     method: 'POST',
                     body: JSON.stringify(data),
                     headers: { 'Content-Type': 'application/json' }
                 });
 
-                if (response.ok) {
-                    modal.style.display = "none";
+                const result = await response.json();
+
+                if (result.success) {
+                    // ... rest of your success logic (reset form, show successAlert)
                     estimateForm.reset();
-                    // Reset phone field visibility after reset
                     phoneGroup.style.display = "none";
                     phoneInput.required = false;
 
                     if (successAlert) {
                         successAlert.style.display = "flex";
-                        closeAlertBtn.onclick = () => successAlert.style.display = "none";
                     }
+                    if (closeAlertBtn) {
+                    closeAlertBtn.onclick = () => {
+                        successAlert.style.display = "none";
+                    };
+                }
                 } else {
                     throw new Error('Submission failed');
                 }

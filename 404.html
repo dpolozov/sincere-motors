@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | TCF Auto Service Inc.</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-container {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            color: var(--brand-blue);
+            line-height: 1;
+        }
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logotcf.webp" alt="TCF Auto Service Inc Logo">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1>Engine Stalled!</h1>
+        <p class="error-message">We can't seem to find the page you're looking for.</p>
+        
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+            <a href="index.html" class="main-btn">Back to Home</a>
+            <a href="index.html#services" class="main-btn" style="background: var(--brand-blue);">View Services</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 TCF Auto Service Inc. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
