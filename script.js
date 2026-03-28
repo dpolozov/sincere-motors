@@ -1,3 +1,15 @@
+// 1. The Callback function
+function onRecaptchaSuccess(token) {
+    console.log("Success!");
+    
+    // 2. Logic to close your modal
+    const myModal = document.getElementById('estimateModal');
+    myModal.style.display = 'none'; 
+    
+    // Optional: Submit the form automatically
+    // document.getElementById("my-form").submit();
+}
+
 const initSite = () => {
     // --- SELECTORS ---
     const burger = document.querySelector('#burger');

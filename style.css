@@ -614,3 +614,15 @@ iframe {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Target the wrapper you placed the recaptcha in */
+.recaptcha-wrapper {
+    position: relative;
+    bottom: 20px; /* Adjust this value to lift it higher */
+    z-index: 9999;
+}
+
+/* If you need to force the challenge frame specifically */
+iframe[title="recaptcha challenge"] {
+    transform: translateY(-50px); /* Moves the popup specifically */
+}
