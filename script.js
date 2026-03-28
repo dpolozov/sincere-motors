@@ -96,7 +96,8 @@ const initSite = () => {
             data.services_requested = checkedServices.join(', ');
             data.subject = "New Estimate Request - TCF Auto";
 
-            const submitBtn = estimateForm.querySelector('button[type="submit"]');
+            // Look for the submit button by its attribute, even if it's in the modal-footer
+            const submitBtn = document.querySelector('button[type="submit"][form="estimateForm"]');
             const originalBtnText = submitBtn.innerText;
 
             try {
