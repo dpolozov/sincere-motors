@@ -12,45 +12,58 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png">
 
-<script type="application/ld+json">
-    {
-    "@context": "https://schema.org",
-    "@type": "AutoRepair",
-    "name": "TCF Auto Service Inc.",
-    "image": "https://www.tcfautoservice.com/logotcf.webp",
-    "@id": "https://www.tcfautoservice.com",
-    "url": "https://www.tcfautoservice.com",
-    "telephone": "+16509314839",
-    "priceRange": "$$",
-    "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "1940 Leslie St",
-        "addressLocality": "San Mateo",
-        "addressRegion": "CA",
-        "postalCode": "94403",
-        "addressCountry": "US"
-    },
-    "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 37.548483,
-        "longitude": -122.300582
-    },
-    "openingHoursSpecification": [
+    <script type="application/ld+json">
         {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "08:00",
-        "closes": "17:30"
+        "@context": "https://schema.org",
+        "@type": "AutoRepair",
+        "name": "TCF Auto Service Inc.",
+        "image": "https://www.tcfautoservice.com/logotcf.webp",
+        "@id": "https://www.tcfautoservice.com",
+        "url": "https://www.tcfautoservice.com",
+        "telephone": "+16509314839",
+        "priceRange": "$$",
+        "description": "ASE Certified auto repair in San Mateo specializing in high-precision diagnostics, brake service, and factory-scheduled maintenance. Trust, Care, and Full-Service Precision.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "1940 Leslie St",
+            "addressLocality": "San Mateo",
+            "addressRegion": "CA",
+            "postalCode": "94403",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 37.548483,
+            "longitude": -122.300582
+        },
+        "openingHoursSpecification": [
+            {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "17:30"
+            },
+            {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "description": "By Appointment Only",
+            "opens": "09:00", 
+            "closes": "14:00"
+            }
+        ],
+        "hasCredential": {
+            "@type": "EducationalOccupationalCredential",
+            "name": "ASE Certified",
+            "credentialCategory": "Certification"
+        },
+        "sameAs": [
+            "https://www.facebook.com/your-page-link",
+            "https://www.yelp.com/biz/your-yelp-link"
+        ]
         }
-    ],
-    "sameAs": [
-        "https://www.facebook.com/your-page-link",
-        "https://www.yelp.com/biz/your-yelp-link"
-    ]
-    }
     </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="script.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
@@ -81,12 +94,9 @@
         <div class="hero-overlay">
             <div class="container">
                 <div class="hero-text-box">
-                    <h1>TCF AUTO SERVICE: TRUST, CARE, & FAIR PRICING</h1>
-                    <p>Precision Auto Repair for the San Mateo Community.</p>
-                    
-                    <a href="javascript:void(0)" id="openEstimateModal" class="main-btn">
-                        Get a Free Estimate
-                    </a>
+                    <h1>TCF AUTO SERVICE: TRUST, CARE, & PRECISION</h1>
+                    <p>Precision Auto Repair for the San Mateo Community.</p>           
+                    <a href="#" id="openEstimateModal" class="main-btn">Get a Free Estimate</a>
                 </div>
             </div>
         </div>
@@ -97,7 +107,7 @@
             <div class="trust-item"><span>✓</span> ASE Certified</div>
             <div class="trust-item"><span>✓</span> Local Family Owned</div>
             <div class="trust-item"><span>✓</span> 12mo/12k Warranty</div>
-            <div class="trust-item"><span>✓</span> Fair & Transparent</div>
+            <div class="trust-item"><span>✓</span> Upfront & Honest</div>
         </div>
     </section>
 
@@ -138,10 +148,12 @@
         <div class="container">
             <div style="max-width: 800px; margin: 0 auto; text-align: center;">
                 <h2 class="section-title">The TCF Difference</h2>
-                <p style="font-size: 1.1rem; color: #555;">
-                    At <strong>TCF Auto Service Inc.</strong>, our name stands for Trust, Care, and Fair pricing. 
-                    We believe in transparency, honesty, and treating every customer like a neighbor. 
-                    You'll always get a full explanation of the work needed and a fair price—no surprises, no pressure.
+                <p style="font-size: 1.1rem; color: #555; line-height: 1.8;">
+                    At <strong>TCF Auto Service Inc.</strong>, our name stands for <strong>Trust, Care, and Full-Service Precision</strong>. 
+                    We believe that honesty is the foundation of every repair. As a local, family-owned shop, 
+                    we provide the San Mateo community with ASE-certified technical expertise and transparent communication. 
+                    Whether it's a routine oil change or complex diagnostics, you’ll receive a clear explanation 
+                    of your vehicle’s needs—ensuring you drive away with total confidence.
                 </p>
             </div>
         </div>
@@ -159,15 +171,12 @@
                 </h3>
                 <p style="font-size: 1.2rem; line-height: 1.8; opacity: 0.9; margin-bottom: 40px;">
                     At <strong>TCF Auto Service Inc.</strong>, we don't just fix cars—we provide peace of mind. 
-                    Most repairs and parts are backed by our 12/12 limited warranty. Using premium parts 
-                    and ASE-certified expertise, we ensure the job is done right the first time. 
-                    If any covered repair fails, we’ll take care of it. Period.
+                    Our commitment to <strong>Care and Precision</strong> means using premium parts 
+                    and ASE-certified expertise to ensure the job is done right the first time.
                 </p>
                 
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
-                    <a href="javascript:void(0)" onclick="document.getElementById('estimateModal').style.display='block'" class="main-btn">
-                        Schedule Your Service Now
-                    </a>
+                    <a href="#" class="main-btn open-modal-trigger">Schedule Your Service Now</a>
                     <p style="font-size: 0.9rem; color: var(--brand-gold); font-weight: bold;">
                         — OR CALL — <br>
                         <a href="tel:6509314839" style="color: white; text-decoration: none; font-size: 1.2rem;">650-931-4839</a>
@@ -183,25 +192,28 @@
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"Best mechanic in San Mateo. TCF is honest about what needs to be fixed now and what can wait. Fair pricing and great communication."</p>
-                    <cite>- Michael R.</cite>
+                    <p>"A mechanic you can trust. No upsells, just quality work. They fixed my brakes and the car drives like new. Highly recommend for anyone in San Mateo."</p>
+                    <cite>— James R.</cite>
                 </div>
-                    <div class="testimonial-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"I've been taking my cars to TCF Auto for years. They are professional, ASE certified, and always stand by their work."</p>
-                        <cite>- Sarah L.</cite>
-                    </div>
+
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p>"Finally found a shop I can trust. They explained the diagnostics clearly and didn't try to upsell me on unnecessary parts."</p>
-                    <cite>- David K.</cite>
+                    <p>"Professional, communicative, and precise. They diagnosed an electrical issue other shops couldn't find. Truly the best service I've had in years."</p>
+                    <cite>— Sarah L.</cite>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Honest and efficient. TCF Auto is my new go-to shop. They stay true to their word and the turnaround time is fantastic."</p>
+                    <cite>— Michael T.</cite>
                 </div>
             </div>
             <div class="testimonial-cta">
-                <a href="https://search.google.com/local/writereview?placeid=ChIJ9X0_4V9_j4ARX_X_X_X_X_X" 
-                target="_blank" 
-                class="google-review-btn">
+                <a href="https://www.google.com/search?q=tcf+auto+service+san+mateo#lrd=0x808f9e5fe13f7d35:0xc1867f7fef3f755f,3" target="_blank" class="google-review-btn">
                     <span class="google-g">G</span> Review us on Google
+                </a>
+                <a href="https://www.yelp.com/biz/tcf-automotive-service-san-mateo" target="_blank" class="google-review-btn" style="border-color: #d32323; margin-left: 10px;">
+                    <span style="color: #d32323; font-weight: 900;">Yelp</span> Review us on Yelp
                 </a>
             </div>
         </div>
@@ -212,6 +224,7 @@
             <h2 class="section-title" style="color: white;">Visit Our Shop Today</h2>
             <p>1940 Leslie St, San Mateo, CA 94403</p>
             <p><strong>Mon-Fri:</strong> 8:00 AM – 5:30 PM</p>
+            <p><strong>Sat:</strong> By Appointment Only</p>
             <p><strong>Phone:</strong> <a href="tel:6509314839" style="color: white; text-decoration: none; font-weight: bold;">650-931-4839</a></p>
             
             <div style="margin: 30px 0;">
@@ -239,74 +252,99 @@
     </footer>
     <div id="estimateModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Request a Free Estimate</h2>
-            
-            <div class="modal-call-section">
-                <a href="tel:6509314839" class="cta-btn-nav modal-cta">
-                    650-931-4839
-                </a>
+            <div class="modal-header">
+                <span class="close-modal">&times;</span>
+                <h2>Request a Free Estimate</h2>
+                
+                <div class="modal-call-section">
+                    <a href="tel:6509314839" class="cta-btn-nav modal-cta">
+                        650-931-4839
+                    </a>
+                </div>
+                <div class="modal-divider">
+                    <span>OR SEND A MESSAGE</span>
+                </div>
             </div>
+            <div class="modal-body">
+                <p>Fill out the details below and we'll get back to you shortly.</p>
 
-            <div class="modal-divider">
-                <span>OR SEND A MESSAGE</span>
-            </div>
+                <form action="https://api.staticforms.xyz/submit" method="POST" id="estimateForm">
+                    <input type="hidden" name="accessKey" value="sf_fffe1ee9fc6f10a219fb937e">
+                    <input type="hidden" name="replyTo" value="email">
+                    <input type="hidden" name="_subject" value="New Estimate Request - TCF Auto Service Inc.">
+                    <input type="hidden" name="Contact_Preference" id="contactPrefHidden" value="Email Only">
 
-            <p>Fill out the details below and we'll get back to you shortly.</p>
-
-            <form action="https://api.staticforms.xyz/submit" method="POST" id="estimateForm">
-                <input type="hidden" name="accessKey" value="sf_4a65a4e98436b0de6e984fa1">
-                <input type="hidden" name="replyTo" value="email">
-                <input type="hidden" name="_subject" value="New Estimate Request - TCF Auto Service Inc.">
-                <input type="hidden" name="Contact_Preference" id="contactPrefHidden" value="Email Only">
-
-                <div class="form-group">
-                    <label for="custName">Name *</label>
-                    <input type="text" name="name" id="custName" required placeholder="John Doe">
-                </div>
-
-                <div class="form-group">
-                    <label for="vehicleInfo">Vehicle Year, Make, & Model *</label>
-                    <input type="text" name="vehicle" id="vehicleInfo" required placeholder="e.g., 2018 Toyota Camry">
-                </div>
-
-                <div class="form-group">
-                    <label for="issueDesc">Description of Issues *</label>
-                    <textarea name="message" id="issueDesc" rows="4" required placeholder="Brake service, oil leak, etc..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="custEmail">Email Address *</label>
-                    <input type="email" name="email" id="custEmail" required placeholder="name@email.com">
-                </div>
-
-                <div class="form-group">
-                    <label>How should we reach you? *</label>
-                    <div class="radio-options" style="display: flex; gap: 20px; margin: 10px 0;">
-                        <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <input type="radio" name="replyTo" value="email" checked> Email Only
-                        </label>
-                        <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <input type="radio" name="replyTo" value="phone"> Request Call Back
-                        </label>
+                    <div class="form-group">
+                        <label for="custName">Name *</label>
+                        <input type="text" name="name" id="custName" required placeholder="John Doe">
                     </div>
-                </div>
 
-                <div class="form-group" id="phone-group" style="display: none;">
-                    <label for="custPhone">Phone Number <span id="phoneReqLabel" style="font-size: 0.8em; font-weight: normal;">(Optional)</span></label>
-                    <input type="tel" name="phone" id="custPhone" placeholder="(650) 555-0123">
-                </div>
+                    <div class="form-group">
+                        <label for="vehicleInfo">Vehicle Year, Make, & Model *</label>
+                        <input type="text" name="vehicle" id="vehicleInfo" required placeholder="e.g., 2018 Toyota Camry">
+                    </div>
 
-                <button type="submit" class="main-btn" style="width: 100%; border: none; cursor: pointer; margin-top: 10px;">
+                    <div class="form-group">
+                        <label>Requested Services (Select all that apply)</label>
+                        <div class="services-checkbox-grid">
+                            <label><input type="checkbox" name="services[]" value="Lubrication Service"> Lubrication Service</label>
+                            <label><input type="checkbox" name="services[]" value="Air Cleaner"> Air Cleaner</label>
+                            <label><input type="checkbox" name="services[]" value="Oil Leaks"> Oil Leaks</label>
+                            <label><input type="checkbox" name="services[]" value="Oil & Filter"> Oil & Filter</label>
+                            <label><input type="checkbox" name="services[]" value="Engine Tune-Up"> Engine Tune-Up</label>
+                            <label><input type="checkbox" name="services[]" value="Transmission Service"> Transmission Service</label>
+                            <label><input type="checkbox" name="services[]" value="State Inspection"> State Inspection</label>
+                            <label><input type="checkbox" name="services[]" value="Balance Wheels"> Balance Wheels</label>
+                            <label><input type="checkbox" name="services[]" value="Rotate Tires"> Rotate Tires</label>
+                            <label><input type="checkbox" name="services[]" value="Align Front End"> Align Front End</label>
+                            <label><input type="checkbox" name="services[]" value="Service A/C"> Service A/C</label>
+                            <label><input type="checkbox" name="services[]" value="Service Brakes"> Service Brakes</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issueDesc">Description of Issues *</label>
+                        <textarea name="message" id="issueDesc" rows="4" required placeholder="Describe your service needs (e.g., Brake service, oil leak). Please mention if you are requesting a Saturday appointment."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="custEmail">Email Address *</label>
+                        <input type="email" name="email" id="custEmail" required placeholder="name@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>How should we reach you? *</label>
+                        <div class="radio-options" style="display: flex; gap: 20px; margin: 10px 0;">
+                            <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" name="replyTo" value="email" checked> Email Only
+                            </label>
+                            <label style="font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" name="replyTo" value="phone"> Request Call Back
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="phone-group" style="display: none;">
+                        <label for="custPhone">Phone Number <span id="phoneReqLabel" style="font-size: 0.8em; font-weight: normal;">(Optional)</span></label>
+                        <input type="tel" name="phone" id="custPhone" placeholder="(650) 555-0123">
+                    </div>
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="6Le4IZwsAAAAAJi8KMwUFbfPtV8bU3s1vak5FnNO" data-theme="dark"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="estimateForm" class="main-btn" style="width: 100%;">
                     Send Request
                 </button>
-            </form>
+            </div>
         </div>
     </div>
     <div id="successAlert" class="modal" style="display:none; z-index: 2000;">
         <div class="modal-content" style="max-width: 300px; text-align: center; padding: 25px; border-radius: 4px;">
-            <h3 style="color: var(--brand-blue); font-size: 1.1rem; margin-bottom: 15px; font-weight: 600;">Message Sent</h3>
-            <button class="main-btn" id="closeAlertBtn" style="width: 100%; padding: 10px; font-size: 0.9rem;">OK</button>
+            <h3 style="color: var(--brand-blue); font-size: 1.1rem; margin-bottom: 15px;">Message Sent!</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">We will contact you shortly regarding your request.</p>
+            <button id="closeAlertBtn" class="main-btn" style="width: 100%; border: none; cursor: pointer;">OK</button>
         </div>
     </div>
 </body>

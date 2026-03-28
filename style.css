@@ -215,12 +215,18 @@ body {
 }
 
 @media (max-width: 768px) {
-    .nav-links { display: none; } /* Hide for mobile - would require JS toggle */
-    .hero-text-box { text-align: center; }
-    .hero-text-box h1 { font-size: 2rem; }
-    .hero { height: 60vh; }
-    .logo img { height: 50px; /* Smaller height for mobile screens */}
-    .main-nav { padding: 10px 0; }
+    .nav-links {
+        display: flex; /* Ensure it's flex when the media query hits */
+        pointer-events: none; /* Prevent clicking links while hidden */
+        opacity: 0;
+        /* ... existing styles ... */
+    }
+
+    .nav-links.nav-active {
+        transform: translateY(0%);
+        opacity: 1;
+        pointer-events: auto; /* Re-enable clicks when visible */
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -323,22 +329,68 @@ iframe {
     align-items: center; 
     justify-content: center;
     padding: 10px; /* Safety gap so modal doesn't touch screen edges */
+
+    align-items: center; 
+    justify-content: center;
+    overflow-y: auto;
 }
 
 /* The Modal Box itself */
+/* Update the main content box */
 .modal-content {
     background-color: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 500px;
+    margin: auto;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
     position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex; /* Use flex to separate header/body/footer */
+    flex-direction: column;
+    max-height: 90vh; /* Ensure it doesn't taller than the screen */
+    padding: 0; /* Remove padding here, we'll add it to internal sections */
+}
 
-    /* --- SCROLLING FIX --- */
-    max-height: 90vh; /* Limits height to 90% of screen */
-    overflow-y: auto; /* Adds scrollbar inside if content overflows */
+/* Stationary Header Shadow */
+.modal-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Subtle shadow */
+    z-index: 11; /* Keep above scrolling content */
+}
+
+/* Scrollable Body */
+.modal-body {
+    padding: 20px 25px;
+    overflow-y: auto; /* This allows the scrolling */
+    flex-grow: 1;
+    background-color: #fdfdfd; /* Slightly different shade to show contrast */
+
+        /* --- SCROLLING FIX --- */
     -webkit-overflow-scrolling: touch; /* Smooth scrolling for iPhones */
+}
+
+/* Stationary Footer Shadow */
+.modal-footer {
+    padding: 15px 25px;
+    border-top: 1px solid #eee;
+    background: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05); /* Upward shadow */
+    z-index: 11;
+}
+
+/* Ensure the Close Button stays in the header area */
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-muted);
+    cursor: pointer;
+    z-index: 10;
 }
 
 /* Make the scrollbar look a bit cleaner */
@@ -404,8 +456,15 @@ iframe {
 .modal-divider {
     text-align: center;
     position: relative;
-    margin: 30px 0;
+    margin: 30px 30px 10px 30px;
     border-bottom: 1px solid #eee;
+}
+
+.modal-footer {
+    padding: 15px 25px;
+    border-top: 1px solid #eee;
+    background: #fff;
+    border-radius: 0 0 8px 8px;
 }
 
 .modal-divider span {
@@ -419,6 +478,37 @@ iframe {
     font-size: 0.75rem;
     font-weight: bold;
     letter-spacing: 1px;
+}
+
+.services-checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 10px;
+    margin-top: 10px;
+    background: #fdfdfd;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.services-checkbox-grid label {
+    font-weight: normal !important;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.services-checkbox-grid input[type="checkbox"] {
+    width: auto; /* Overrides the 100% width from general form-group inputs */
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .services-checkbox-grid {
+        grid-template-columns: 1fr; /* Stack to one column on small mobile screens */
+    }
 }
 
 .testimonials-grid {
@@ -460,7 +550,10 @@ iframe {
 }
 
 .testimonial-cta {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
     margin-top: 50px;
 }
 
@@ -477,6 +570,7 @@ iframe {
     font-weight: 700;
     font-size: 0.9rem;
     transition: background-color 0.3s, box-shadow 0.3s;
+    margin-left: 0 !important; /* Overrides the inline style for better mobile wrapping */
 }
 
 .google-review-btn:hover {
