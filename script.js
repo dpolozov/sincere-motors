@@ -3,22 +3,6 @@
  * Handles: Navigation, Modals, Conditional Contact Fields, and reCAPTCHA/StaticForms Submission
  */
 
-// 1. GLOBAL CALLBACK: Required for reCAPTCHA 'data-callback' to function correctly
-function onRecaptchaSuccess(token) {
-    const estimateForm = document.querySelector('#estimateForm');
-    const modal = document.querySelector('#estimateModal');
-
-    // Close the modal immediately so the user sees progress
-    if (modal) {
-        modal.style.display = "none";
-    }
-
-    // Trigger the actual 'submit' event logic defined in initSite
-    if (estimateForm) {
-        estimateForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-    }
-}
-
 const initSite = () => {
     // --- SELECTORS ---
     const burger = document.querySelector('#burger');
@@ -105,8 +89,12 @@ const initSite = () => {
         estimateForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Check if reCAPTCHA is actually completed
             const recaptchaResponse = grecaptcha.getResponse();
-            if (recaptchaResponse.length === 0) return; 
+            if (recaptchaResponse.length === 0) {
+                alert("Please complete the reCAPTCHA to verify you are human.");
+                return; 
+            }
 
             // Prepare data object for StaticForms
             const formData = new FormData(estimateForm);
