@@ -1,0 +1,11 @@
+# TCF Auto Service - robots.txt
+User-agent: *
+Allow: /
+
+# Block administrative or private files (if applicable)
+Disallow: /admin/
+Disallow: /config/
+Disallow: /private/
+
+# Link to your sitemap (update with your actual domain)
+Sitemap: https://www.tcfautoservice.com/sitemap.xml
