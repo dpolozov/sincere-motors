@@ -269,16 +269,18 @@ iframe {
         position: absolute;
         right: 0px;
         height: 40vh;
-        top: 90px; /* Adjust based on your header height */
+        top: 80px; /* Adjust based on your header height */
         background-color: var(--white);
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
         transform: translateY(-150%); /* Start hidden above the screen */
-        transition: transform 0.5s ease-in;
+        transition: transform 0.4s ease-in-out, opacity 0.3s;
+        opacity: 0;
+        pointer-events: none;
         box-shadow: 0 10px 10px rgba(0,0,0,0.1);
-        padding-top: 20px;
+        z-index: 999;
     }
 
     .nav-links li {
@@ -288,6 +290,8 @@ iframe {
     /* This class is added by JavaScript when the burger is clicked */
     .nav-active {
         transform: translateY(0%);
+        opacity: 1;
+        pointer-events: auto;
     }
 }
 
